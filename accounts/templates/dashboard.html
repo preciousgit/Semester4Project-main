@@ -1,0 +1,345 @@
+{% load static %} {% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reader's Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Nav bar -->
+    <nav
+      class="flex w-full bg-white h-16 items-center justify-between px-4 z-10"
+    >
+      <!-- Nav Logo -->
+      <div class="logo">
+        <a href="#" class="font-sans text-base font-bold text-[#2cafdf]"
+          >e.library dashboard</a
+        >
+      </div>
+
+      <!-- Nav Links -->
+      <div class="gap-8 flex">
+        <!-- Hamburger menu button -->
+        <button id="toggleMenu" class="focus:outline-none">
+          <svg
+            class="w-6 h-6 text-[#2cafdf]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- aside tag -->
+    <div class="flex md:justify-end items-center pr-20 h-[600px] z-10">
+      <div
+        class="aside_tag flex justify-center w-[300px] h-[400px] bg-opacity-10 backdrop-blur-md backdrop-saturate-10 bg-[#2cafdf] bg-opacity-10 border border-white rounded-lg hidden transition-opacity duration-900"
+      >
+        <div class="flex-col mt-5 gap-4 flex">
+          <!-- profile -->
+          <div
+            class="w-[200px] h-10 flex justify-evenly items-center rounded-xl"
+          >
+            <div
+              class="flex justify-evenly items-center w-full px-3 py-2 rounded-md"
+            >
+              <p class="text-white">Welcome</p>
+              <p class="text-white font-bold">{{ user.username }}</p>
+            </div>
+            <!-- end of profile -->
+          </div>
+
+          <!-- Search book functionality -->
+          <form method="POST" action="{% url 'auth-search' %}">
+            {% csrf_token %}
+            <div class="search_book flex flex-col gap-2">
+              <input
+                type="text"
+                name="name_of_book"
+                id="Search_book"
+                placeholder="Search book"
+                autocomplete="off"
+                class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                class="bg-[#000000] text-white rounded-md px-4 py-2"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+          <!-- end of search Functionalities -->
+
+          <!-- Video book -->
+          <div
+            class="video_book rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/video_book.svg" alt="video_book" />
+            <a href="#Movie_tab" class="text-[#2cafdf] cursor-pointer"
+              >Video Book</a
+            >
+          </div>
+
+          <!-- Text book -->
+          <div
+            class="text_book rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/book_book.svg" alt="book img" />
+            <a href="#Textbook_tab" class="text-[#2cafdf] cursor-pointer"
+              >Text Book</a
+            >
+          </div>
+
+          <!-- log out -->
+          <div
+            class="log_out rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/logout_logout.svg" alt="logout" />
+            <form action="{% url 'logout' %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="text-[#2cafdf] cursor-pointer">
+                Log out
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text on the aside tag -->
+    <div
+      class="flex flex-col h-[660px] w-full absolute items-center justify-center bg-gray-950"
+    >
+      <div class="welcome_text">
+        <p class="text-white text-xl">Welcome To E library dashboard</p>
+      </div>
+      <!-- card to display recently added -->
+    </div>
+
+    <!-- list of Random Suggested books -->
+    <div class="flex flex-col w-full justify-center items-center bg-[#32c8ff]">
+      <div class="text-white font-bold mt-8 font-serif">Suggested Books</div>
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4"
+      >
+        {% for book in random_books %}
+        <div class="bg-slate-950 shadow-lg rounded-md p-4 flex flex-col gap-2">
+          <img
+            src="{{ book.image.url }}"
+            alt="Book Image"
+            class="mt-2 w-full rounded-md"
+          />
+
+          <!-- Book details -->
+          <h3 class="text-xl font-semibold text-white">{{ book.title }}</h3>
+          <p class="text-white underline">Author: {{ book.author }}</p>
+          <p class="text-white underline">
+            Publication Date: {{ book.publication_date }}
+          </p>
+          <p class="text-white underline">ISBN: {{ book.isbn }}</p>
+          <p class="text-white">Description: {{ book.description }}</p>
+          <p class="text-white underline">
+            Downloadable: {% if book.downloadable %}Yes{% else %}No{% endif %}
+          </p>
+          <p class="text-white underline">Category: {{ book.category }}</p>
+          <p class="text-white underline">Book Type: {{ book.book_type }}</p>
+
+          <!-- Conditional form display -->
+          {% if book.book_type == 'book' %}
+          <form action="{% url 'read-book' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="book_name" value="{{ book.title }}" />
+            <!-- Button to submit the form -->
+            <button
+              type="submit"
+              class="block text-center mt-4 py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300"
+            >
+              Read Book
+            </button>
+          </form>
+          {% elif book.book_type == 'video' %}
+          <form action="{% url 'watch-video' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="book_name" value="{{ book.title }}" />
+            <!-- Button to submit the form -->
+            <button
+              type="submit"
+              class="block text-center mt-4 py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300"
+            >
+              Watch Movie
+            </button>
+          </form>
+          {% endif %}
+
+          <!-- Download book button, only if downloadable -->
+          {% if book.downloadable %}
+          <a
+            href="{% if book.book_type == 'book' %}{{ book.text_file.url }}{% elif book.book_type == 'video' %}{{ book.movie.video.url }}{% endif %}"
+            download
+          >
+            <button
+              class="block text-center mt-2 py-2 px-4 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors duration-300"
+            >
+              Download {% if book.book_type == 'book' %}Book {% elif book.book_type == 'video' %}Video{% endif %}
+            </button>
+          </a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- End of suggested books -->
+
+    <!-- Movie book section with horizontal scrollable outline -->
+    <div
+      class="bg-slate-950 w-full flex flex-col items-center relative mt-8 p-4"
+      id="Movie_tab"
+    >
+      <p class="text-white text-2xl font-bold mb-6">Movie Books</p>
+      <div
+        class="w-full h-90 overflow-x-auto bg-gray-800 rounded-lg p-4 flex gap-6"
+        style="scroll-behavior: smooth"
+      >
+        {% for book in all_books %} {% if book.book_type == 'video' %}
+        <div
+          class="flex flex-col items-center bg-gray-700 rounded-lg shadow-lg p-4 gap-4 min-w-[300px] transform transition-transform duration-300 hover:scale-105"
+        >
+          <!-- Book details -->
+          <div class="flex flex-col justify-center text-center">
+            <h3 class="text-2xl font-semibold text-white">{{ book.title }}</h3>
+          </div>
+          <!-- Video element -->
+          <video controls class="w-full h-48 rounded-md" preload="metadata">
+            <source src="{{ book.movie.video.url }}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <!-- Conditional form display for watching movie -->
+          <form
+            action="{% url 'watch-video' %}"
+            method="POST"
+            class="w-full mt-4"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="book_name" value="{{ book.title }}" />
+            <!-- Button to submit the form -->
+            <button
+              type="submit"
+              class="w-full py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300"
+            >
+              Watch Movie
+            </button>
+          </form>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+
+    <!-- Textbook section with horizontal scrollable outline -->
+    <div
+      class="bg-slate-950 w-full flex flex-col items-center relative mt-8 p-4"
+      id="Textbook_tab"
+    >
+      <p class="text-white text-2xl font-bold mb-6">Text Books</p>
+      <div
+        class="w-full h-90 overflow-x-auto bg-gray-800 rounded-lg p-4 flex gap-6"
+        style="scroll-behavior: smooth"
+      >
+        {% for book in all_books %} {% if book.book_type == 'book' %}
+        <div
+          class="flex flex-col items-center bg-gray-700 rounded-lg shadow-lg p-4 gap-2 min-w-[200px] max-w-[200px] transform transition-transform duration-300 hover:scale-105"
+        >
+          <!-- Book title -->
+          <div class="w-full">
+            <h3
+              class="text-lg font-semibold text-white text-center break-words"
+            >
+              {{ book.title }}
+            </h3>
+          </div>
+
+          <!-- Book details and cover -->
+          <div class="flex flex-col justify-center items-center w-full">
+            <p class="text-xs text-gray-400 mt-1">{{ book.author }}</p>
+            <p class="text-xs text-gray-400">{{ book.publication_date }}</p>
+
+            <!-- Optional: Book cover image -->
+            {% if book.image %}
+            <img
+              src="{{ book.image.url }}"
+              alt="{{ book.title }} cover"
+              class="w-full h-32 rounded-md object-cover mt-2 shadow-md"
+            />
+            {% endif %}
+          </div>
+
+          <!-- Conditional form display for reading book -->
+          <form
+            action="{% url 'read-book' %}"
+            method="POST"
+            class="w-full mt-2"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="book_name" value="{{ book.title }}" />
+            <!-- Button to submit the form -->
+            <button
+              type="submit"
+              class="w-full py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors duration-300"
+            >
+              Read Book
+            </button>
+          </form>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer
+      class="bg-slate-950 h-20 p-4 text-gray-600 flex flex-col items-center justify-center"
+    >
+      <p class="text-sm">Copyright © 2023 e.Library. All rights reserved.</p>
+      <p class="text-sm">
+        Powered by <a href="#" class="text-[#2cafdf]">e.Library</a>
+      </p>
+    </footer>
+    <!-- Javascript -->
+    <script>
+      const toggleMenu = document.getElementById("toggleMenu");
+      const asideTag = document.querySelector(".aside_tag");
+
+      toggleMenu.addEventListener("click", () => {
+        asideTag.classList.toggle("hidden");
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+
+          // Hide the aside tag when an anchor is clicked
+          asideTag.classList.add("hidden");
+        });
+      });
+    </script>
+  </body>
+</html>
+{% else %}
+<p>You are not authenticated. Please log in.</p>
+{% endif %}

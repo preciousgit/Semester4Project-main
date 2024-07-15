@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <nav
+      class="flex w-full bg-transparent h-16 items-center justify-between px-4 z-10"
+    >
+      <!-- Nav Logo -->
+      <div class="logo">
+        <a
+          href="/books/home/"
+          class="font-sans text-base font-bold text-[#2cafdf]"
+          >e.library dashboard</a
+        >
+      </div>
+
+      <!-- Nav Links -->
+      <div class="gap-8 flex">
+        <!-- Hamburger menu button -->
+        <button id="toggleMenu" class="focus:outline-none">
+          <svg
+            class="w-6 h-6 text-[#2cafdf]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- aside tag -->
+    <div class="flex md:justify-end items-center pr-20 bg-[#2cafdf] h-[600px]">
+      <div
+        class="aside_tag flex justify-center w-[300px] h-[400px] bg-opacity-10 backdrop-blur-md backdrop-saturate-10 bg-[#2cafdf] bg-opacity-10 border border-white rounded-lg hidden transition-opacity duration-900"
+      >
+        <div class="flex-col mt-5 gap-4 flex">
+          <!-- profile -->
+          <div
+            class="w-[200px] h-10 flex justify-evenly items-center rounded-xl"
+          >
+            <div
+              class="flex justify-evenly items-center w-full px-3 py-2 rounded-md"
+            >
+              <p class="text-white">Welcome</p>
+              <p class="text-white">Oluwapelumi</p>
+            </div>
+            <!-- end of profile -->
+          </div>
+
+          <!-- Search book functionality -->
+          <div class="search_book flex flex-col gap-2">
+            <input
+              type="text"
+              name="search_book"
+              id="Search_book"
+              placeholder="Search book"
+              autocomplete="off"
+              class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+            />
+            <button
+              type="button"
+              class="bg-[#000000] text-white rounded-md px-4 py-2"
+            >
+              Search
+            </button>
+          </div>
+          <!-- end of search Functionalities -->
+
+          <!-- Video book -->
+          <div
+            class="video_book rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/video_book.svg" alt="video_book" />
+            <p class="text-[#2cafdf] cursor-pointer">Video Book</p>
+          </div>
+
+          <!-- Text book -->
+          <div
+            class="text_book rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/book_book.svg" alt="book img" />
+            <p class="text-[#2cafdf] cursor-pointer">Text Book</p>
+          </div>
+
+          <!-- log out -->
+          <div
+            class="log_out rounded-md px-4 py-2 bg-white flex justify-evenly w-full"
+          >
+            <img src="/asset/logout_logout.svg" alt="logout" />
+            <p class="text-[#2cafdf] cursor-pointer">Log Out</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text on the aside tag -->
+    <div
+      class="text_on_aside_tag flex flex-col h-[500px] w-full absolute items-center justify-center border-b border-blue-500"
+    >
+      <div class="welcome_text">
+        <p class="text-white text-xl">Welcome To E library dashboard</p>
+      </div>
+      <!-- card to display recently added -->
+    </div>
+
+    <!-- Javascript -->
+    <script>
+      const toggleMenu = document.getElementById("toggleMenu");
+      const asideTag = document.querySelector(".aside_tag");
+
+      toggleMenu.addEventListener("click", () => {
+        asideTag.classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>

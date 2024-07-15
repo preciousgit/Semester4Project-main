@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Welcome to E-Library</title>
+    <!-- Tailwind CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-white font-sans">
+    <!-- Welcome section -->
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <!-- Welcome message -->
+        <div>
+          <h2 class="text-4xl font-bold text-gray-800 mb-4">
+            Welcome to E-Library
+          </h2>
+          <p class="text-lg text-gray-700 mb-6">
+            Explore our vast collection of books and resources, all at your
+            fingertips.
+          </p>
+          <a
+            href="/books/home/"
+            class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+            >Get Started</a
+          >
+        </div>
+
+        <!-- Image -->
+        <div class="text-center">
+          <img
+            src="{% static 'welcome.jpg' %}"
+            alt="Welcome Image"
+            class="w-full h-auto rounded-lg"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured categories -->
+    <div class="bg-gray-100 py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+          Featured Categories
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Category 1 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src="{% static 'non_sci_fic.jpg' %}"
+              alt="Category 1"
+              class="w-full h-56 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Literary Fiction</h3>
+              <p class="text-gray-700">
+                Explore captivating stories and timeless classics.
+              </p>
+            </div>
+          </div>
+
+          <!-- Category 2 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src="{% static 'sci_fi.jpg' %}"
+              alt="Category 2"
+              class="w-full h-56 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">Science Fiction</h3>
+              <p class="text-gray-700">
+                Discover imaginative worlds and futuristic adventures.
+              </p>
+            </div>
+          </div>
+
+          <!-- Category 3 -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src="{% static 'history_pics.jpg' %}"
+              alt="Category 3"
+              class="w-full h-56 object-cover"
+            />
+            <div class="p-6">
+              <h3 class="text-xl font-semibold mb-2">History</h3>
+              <p class="text-gray-700">
+                Uncover the past and learn from historical events.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to action -->
+    <div class="bg-blue-600 py-12">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-4">
+          Start Your Reading Journey Today
+        </h2>
+        <p class="text-lg text-white mb-6">
+          Join us and embark on an adventure through the pages of great books.
+        </p>
+        <a
+          href="/books/login/"
+          class="bg-white text-blue-600 font-bold py-2 px-4 rounded-md hover:bg-gray-100 hover:text-blue-800 transition-colors duration-300"
+          >Start Reading</a
+        >
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Books</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Nav bar -->
+    <nav
+      class="flex w-full bg-blue-500 h-16 items-center justify-between px-4 z-10 border-b border-blue-700"
+    >
+      <!-- Nav Logo -->
+      <div class="logo">
+        <a href="/books/home/" class="font-sans text-base font-bold text-white"
+          >e.library</a
+        >
+      </div>
+
+      <!-- Nav Links -->
+      <div class="nav_links hidden md:flex gap-8 flex">
+        <!-- Nav Links -->
+        <a href="/books/login/" class="text-white">Get Started</a>
+      </div>
+
+      <!-- Hamburger menu button -->
+      <div class="flex md:hidden">
+        <button id="toggleMenu" class="focus:outline-none">
+          <svg
+            class="w-6 h-6 text-gray-800"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <div
+      class="w-full max-w-screen-lg mt-10 flex justify-center items-center flex-col"
+    >
+      <div class="bg-blue-600 text-white px-4 py-3 mb-4 rounded-md">
+        You are viewing this search book as a Guest. Please click read more to
+        login.
+      </div>
+
+      <h1 class="text-3xl font-bold mb-4">Search Books</h1>
+
+      {% if query %}
+      <p class="text-lg font-semibold mb-4">
+        This is the result of your query: "{{ query }}"
+      </p>
+      {% endif %}
+
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
+        {% for book in books %}
+        <div class="bg-white shadow-md rounded-md p-4">
+          <h3 class="text-xl font-semibold">{{ book.title }}</h3>
+          <img
+            src="{{ book.image.url }}"
+            alt="Book Image"
+            class="mt-2 w-full rounded-md"
+          />
+          <a
+            href="/books/login/"
+            class="block text-center mt-4 py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300"
+            >Read More</a
+          >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- JavaScript -->
+    <script>
+      const toggleMenu = document.getElementById("toggleMenu");
+      const navLinks = document.querySelector(".nav_links");
+
+      toggleMenu.addEventListener("click", () => {
+        navLinks.classList.toggle("hidden");
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

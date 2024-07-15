@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Error</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <!-- Nav bar -->
+    <nav
+      class="flex w-full bg-transparent h-16 items-center justify-evenly z-20 px-4 fixed border border-white"
+    >
+      <!-- Nav Logo -->
+      <div class="logo">
+        <a href="/books/home/" class="font-sans text-base font-bold text-white"
+          >e.library</a
+        >
+      </div>
+    </nav>
+    <!-- End of nav -->
+
+    <div
+      class="bg-gradient-to-br from-blue-200 to-blue-500 absolute flex items-center w-full justify-center h-[789px] shadow-red-lg"
+    >
+      <div class="max-w-md bg-transparent shadow-md rounded-md p-14">
+        <p class="text-gray-600 text-center mb-8 text-white">
+          {% if message %} {{ message }} {% else %} Please click home on the nav
+          {% endif %}
+        </p>
+        <div class="flex justify-center">
+          <a
+            href="/books/login/"
+            class="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-300"
+            >Back to Login</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>E- project Library</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <!-- Nav bar -->
+    <nav
+      class="flex w-full bg-transparent h-16 items-center justify-evenly px-4 z-10 fixed border border-[#2cafdf]"
+    >
+      <!-- Nav Logo -->
+      <div class="logo">
+        <a href="/books/home/" class="font-sans text-base font-bold text-white"
+          >e.library</a
+        >
+      </div>
+
+      <!-- Nav Links -->
+      <div class="gap-8 flex md:hidden bg-[#caeef9] rounded-md">
+        <!-- Hamburger menu button -->
+        <button id="toggleMenu" class="focus:outline-none">
+          <svg
+            class="w-6 h-6 text-gray-800"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <div class="nav_links hidden md:flex gap-8 flex">
+        <!-- Nav Links -->
+        <a href="#about-us" class="text-white">About Us</a>
+        <a href="/books/login/" class="text-white">Get Started</a>
+      </div>
+    </nav>
+    <!-- End of Nav Bar -->
+
+    <!-- First container seen -->
+    <div
+      class="bg-[url('/asset/background.jpg')] bg-no-repeat bg-cover bg-center flex flex-col items-center justify-center pt-[80px] sm:pt-[50px] bg-[#79d6f8] h-[700px] border border-[#2cafdf]"
+    >
+      <!-- first flex -->
+      <div
+        class="container_text flex flex-col items-center gap-8 px-4 text-center relative"
+      >
+        <h1
+          class="font-bold font-sans text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-[#caeef9]"
+        >
+          Welcome to our<br />
+          Online Library Management System
+        </h1>
+        <p class="text-[#caeef9] font-bold xl:text-2xl xl:leading-10">
+          Explore the future of library management with <br />our
+          state-of-the-art Online Library Management System. <br />From
+          eliminating manual bookkeeping to streamlining resource management,
+          <br />our platform ensures effortless library administration.
+        </p>
+        <form method="POST" action="{% url 'search-books' %}">
+          {% csrf_token %}
+          <div class="start_reading flex w-full relative">
+            <div class="nav_search flex-grow mr-4">
+              <input
+                type="text"
+                class="w-full px-4 py-2 text-gray-800 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                name="name_of_book"
+                placeholder="Search Books"
+              />
+            </div>
+            <!-- Search icon -->
+            <div
+              class="search_icon bg-[#2cafdf] w-10 flex items-center justify-center rounded-md absolute top-0 right-0 bottom-0 m-auto cursor-pointer"
+            >
+              <button type="submit">
+                <img src="/asset/Search.svg" alt="Search_Icon" class="size-7" />
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- other container -->
+
+    <div
+      class="bg-[url('/asset/clock.jpg')] bg-no-repeat bg-cover bg-center flex flex-col h-[120px] bg-[#79d6f8] items-center justify-center mt-6 text-white"
+    >
+      <p class="text-xl">Our Opening Time</p>
+      <p>Monday - Friday:</p>
+      <p>Opening Time: 9:00 AM <br />Closing Time: 6:00 PM</p>
+    </div>
+    <!-- book categories -->
+    <div class="list_of_books">
+      <p class="text-center">Our Categories</p>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full pt-2">
+      <div
+        class="bg-[url('/asset/fiction.jpg')] bg-no-repeat bg-cover bg-center bg-[#79d6f8] rounded-md p-4 text-white"
+      >
+        <h2 class="font-bold text-lg">Fiction</h2>
+        <ul class="list-disc pl-5 text-sm">
+          <li>Literary Fiction</li>
+          <li>Science Fiction</li>
+          <li>Fantasy</li>
+          <li>Mystery</li>
+          <li>Thriller</li>
+          <li>Romance</li>
+          <li>Historical Fiction</li>
+          <li>Horror</li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-[url('/asset/non-fiction.jpg')] bg-no-repeat bg-cover bg-center bg-[#79d6f8] rounded-md p-4 text-white"
+      >
+        <h2 class="font-bold text-lg">Non-Fiction</h2>
+        <ul class="list-disc pl-5 text-sm">
+          <li>Biography</li>
+          <li>Memoir</li>
+          <li>Self-Help/Personal Development</li>
+          <li>History</li>
+          <li>Travel</li>
+          <li>Science</li>
+          <li>Technology</li>
+          <li>Psychology</li>
+          <li>Philosophy</li>
+          <li>Business<br />Finance</li>
+          <li>Health<br />Fitness</li>
+          <li>Cookbooks<br />Food</li>
+          <li>Art<br />Photography</li>
+          <li>Religion<br />Spirituality</li>
+          <li>Politics<br />/Government</li>
+          <li>Education</li>
+          <li>Sports</li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-[url('/asset/children.jpg')] bg-no-repeat bg-cover bg-center bg-[#79d6f8] rounded-md p-4 text-white"
+      >
+        <h2 class="font-bold text-lg">Children's Books</h2>
+        <ul class="list-disc pl-5 text-sm">
+          <li>Picture Books</li>
+          <li>Early Readers</li>
+          <li>Chapter Books</li>
+          <li>Middle Grade</li>
+          <li>Young Adult (YA)</li>
+        </ul>
+      </div>
+
+      <div
+        class="bg-[url('/asset/Dictionaries.jpg')] bg-no-repeat bg-cover bg-center bg-[#79d6f8] rounded-md p-4 text-white"
+      >
+        <h2 class="font-bold text-lg">Reference</h2>
+        <ul class="list-disc pl-5 text-sm">
+          <li>Dictionaries</li>
+          <li>Encyclopedias</li>
+          <li>Almanacs</li>
+          <li>Atlases</li>
+          <li>Thesauruses</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COntact us div -->
+    <div
+      class="bg-[url('/asset/contact_us.jpg')] bg-no-repeat bg-cover bg-center w-full mt-8"
+      id="about-us"
+    >
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Contact Form -->
+        <div class="p-6 bg-transparent rounded-md shadow-md">
+          <h2 class="text-lg font-semibold mb-4 text-white">Contact Us</h2>
+          <form method="POST" action="{% url 'enqiry-for-admin' %}">
+            <div class="mb-4">
+              <label for="name" class="block text-white">Your Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-white">Your Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="message" class="block text-white">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="bg-[#2cafdf] text-white font-bold py-2 px-4 rounded-md hover:bg-[#79d6f8] transition-colors duration-300"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="p-6 p-6 bg-transparent rounded-md shadow-md">
+          <h2 class="text-lg font-semibold mb-4 text-white">
+            Contact Information
+          </h2>
+          <p class="text-white">
+            <span class="font-semibold">Address:</span> 123 Main Street, City,
+            Country
+          </p>
+          <p class="text-white">
+            <span class="font-semibold">Phone:</span> +1 234 567 890
+          </p>
+          <p class="text-white">
+            <span class="font-semibold">Email:</span> info@example.com
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      const toggleMenu = document.getElementById("toggleMenu");
+      const navLinks = document.querySelector(".nav_links");
+
+      toggleMenu.addEventListener("click", () => {
+        navLinks.classList.toggle("hidden");
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Clear local storage and session storage
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+
+    </script>
+  </body>
+</html>
